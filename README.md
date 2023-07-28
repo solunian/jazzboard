@@ -12,3 +12,5 @@ and I tried to learn to play jazz on the piano, but I am terrible at it.
 - `/original-sounds`are ff piano files from https://theremin.music.uiowa.edu/MISpiano.html
   - lol git ignored because it is too large
 - `/edited-sounds` are just renamed so far and changed to wav files
+- coverting from aiff to wav: https://superuser.com/questions/687934/batch-converting-aiff-to-wav
+- renaming files lol: https://www.geeksforgeeks.org/rename-multiple-files-using-python
