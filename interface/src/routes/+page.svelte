@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { playNote } from "$lib/sound";
 
   let keys: Set<string> = new Set();
 
@@ -7,12 +8,20 @@
     window.addEventListener("keypress", (event) => {
       keys.add(event.key);
       keys = keys;
+      if (event.key === "i") {
+        playNote("C", 4);
+      }
     });
 
     window.addEventListener("keyup", (event) => {
       keys.delete(event.key);
       keys = keys;
     });
+  });
+
+  setInterval(() => {
+    for (let i of keys) {
+    }
   });
 </script>
 
