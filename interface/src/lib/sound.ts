@@ -9,6 +9,11 @@ export interface Note {
   octave: number;
 }
 
+export interface Chord {
+  tonic: Note,
+  
+}
+
 // INIT ALLNOTES WITH ORDERING
 let allNotes: Note[] = [
   { freq: "A", octave: 0 },

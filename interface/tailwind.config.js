@@ -2,7 +2,14 @@
 export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ["Poppins", "sans-serif"],
+    },
+    extend: {
+      fontFamily: {
+        badscript: ["Bad Script", "cursive"],
+      },
+    },
   },
   plugins: [],
 };

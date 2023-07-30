@@ -1,0 +1,1 @@
+export type KeyType = "note-modifier" | "chord-modifier" | "chord" | "note";
