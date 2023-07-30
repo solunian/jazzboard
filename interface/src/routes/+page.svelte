@@ -1,20 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { playChord, playNote } from "$lib/sound";
+  import { type Note, playChord, playMelodyNote, stopMelodyNote, type ChordType } from "$lib/sound";
 
   let keys: Set<string> = new Set();
-
-  onMount(() => {
-    window.addEventListener("keydown", (event) => {
-      keys.add(event.key);
-      keys = keys;
-    });
-
-    window.addEventListener("keyup", (event) => {
-      keys.delete(event.key);
-      keys = keys;
-    });
-  });
 
   let prevKeys: Set<string> = new Set();
   const middleOctave = 4;
@@ -44,8 +32,16 @@
     return true;
   };
 
+  // CUTTING NOTES SHORT
+  const keyNoteDict = new Map<string, Note>();
+
+  // THE WATCHER!
   setInterval(() => {
-    let currentOctave = middleOctave;
+    // ======== //
+    // MELODY!! //
+    // ======== //
+
+    let currentOctave = middleOctave + 1;
     // OCTAVE SHIFTS
     if (isHeld("b")) {
       currentOctave -= 2;
@@ -57,97 +53,316 @@
       currentOctave += 2;
     }
 
-
     // SHARP
     if (isHeld("[")) {
       if (isFirstPress("u")) {
-        playNote({ freq: "Db", octave: currentOctave });
+        let note: Note = { freq: "Db", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("u", note);
       }
       if (isFirstPress("i")) {
-        playNote({ freq: "Eb", octave: currentOctave });
+        let note: Note = { freq: "Eb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("i", note);
       }
       if (isFirstPress("o")) {
-        playNote({ freq: "F", octave: currentOctave });
+        let note: Note = { freq: "F", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("o", note);
       }
       if (isFirstPress("p")) {
-        playNote({ freq: "Gb", octave: currentOctave });
+        let note: Note = { freq: "Gb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("p", note);
       }
       if (isFirstPress("j")) {
-        playNote({ freq: "Ab", octave: currentOctave });
+        let note: Note = { freq: "Ab", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("j", note);
       }
       if (isFirstPress("k")) {
-        playNote({ freq: "Bb", octave: currentOctave });
+        let note: Note = { freq: "Bb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("k", note);
       }
       if (isFirstPress("l")) {
-        playNote({ freq: "C", octave: currentOctave + 1 });
+        let note: Note = { freq: "C", octave: currentOctave + 1 };
+        playMelodyNote(note);
+        keyNoteDict.set("l", note);
       }
       if (isFirstPress(";")) {
-        playNote({ freq: "Db", octave: currentOctave + 1 });
+        let note: Note = { freq: "Db", octave: currentOctave + 1 };
+        playMelodyNote(note);
+        keyNoteDict.set(";", note);
       }
     } // FLAT
     else if (isHeld("'")) {
       if (isFirstPress("u")) {
-        playNote({ freq: "B", octave: currentOctave - 1 });
+        // playMelodyNote({ freq: "B", octave: currentOctave - 1 });
+        let note: Note = { freq: "B", octave: currentOctave - 1 };
+        playMelodyNote(note);
+        keyNoteDict.set("u", note);
       }
       if (isFirstPress("i")) {
-        playNote({ freq: "Db", octave: currentOctave });
+        // playMelodyNote({ freq: "Db", octave: currentOctave });
+        let note: Note = { freq: "Db", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("i", note);
       }
       if (isFirstPress("o")) {
-        playNote({ freq: "Eb", octave: currentOctave });
+        // playMelodyNote({ freq: "Eb", octave: currentOctave });
+        let note: Note = { freq: "Eb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("o", note);
       }
       if (isFirstPress("p")) {
-        playNote({ freq: "E", octave: currentOctave });
+        // playMelodyNote({ freq: "E", octave: currentOctave });
+        let note: Note = { freq: "E", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("p", note);
       }
       if (isFirstPress("j")) {
-        playNote({ freq: "Gb", octave: currentOctave });
+        // playMelodyNote({ freq: "Gb", octave: currentOctave });
+        let note: Note = { freq: "Gb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("j", note);
       }
       if (isFirstPress("k")) {
-        playNote({ freq: "Ab", octave: currentOctave });
+        // playMelodyNote({ freq: "Ab", octave: currentOctave });
+        let note: Note = { freq: "Ab", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("k", note);
       }
       if (isFirstPress("l")) {
-        playNote({ freq: "Bb", octave: currentOctave });
+        // playMelodyNote({ freq: "Bb", octave: currentOctave });
+        let note: Note = { freq: "Bb", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("l", note);
       }
       if (isFirstPress(";")) {
-        playNote({ freq: "B", octave: currentOctave });
+        // playMelodyNote({ freq: "B", octave: currentOctave });
+        let note: Note = { freq: "B", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set(";", note);
       }
     } // NATURAL
     else {
       if (isFirstPress("u")) {
-        playNote({ freq: "C", octave: currentOctave });
+        // playMelodyNote({ freq: "C", octave: currentOctave });
+        let note: Note = { freq: "C", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("u", note);
       }
       if (isFirstPress("i")) {
-        playNote({ freq: "D", octave: currentOctave });
+        // playMelodyNote({ freq: "D", octave: currentOctave });
+        let note: Note = { freq: "D", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("i", note);
       }
       if (isFirstPress("o")) {
-        playNote({ freq: "E", octave: currentOctave });
+        // playMelodyNote({ freq: "E", octave: currentOctave });
+        let note: Note = { freq: "E", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("o", note);
       }
       if (isFirstPress("p")) {
-        playNote({ freq: "F", octave: currentOctave });
+        // playMelodyNote({ freq: "F", octave: currentOctave });
+        let note: Note = { freq: "F", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("p", note);
       }
       if (isFirstPress("j")) {
-        playNote({ freq: "G", octave: currentOctave });
+        // playMelodyNote({ freq: "G", octave: currentOctave });
+        let note: Note = { freq: "G", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("j", note);
       }
       if (isFirstPress("k")) {
-        playNote({ freq: "A", octave: currentOctave });
+        // playMelodyNote({ freq: "A", octave: currentOctave });
+        let note: Note = { freq: "A", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("k", note);
       }
       if (isFirstPress("l")) {
-        playNote({ freq: "B", octave: currentOctave });
+        // playMelodyNote({ freq: "B", octave: currentOctave });
+        let note: Note = { freq: "B", octave: currentOctave };
+        playMelodyNote(note);
+        keyNoteDict.set("l", note);
       }
       if (isFirstPress(";")) {
-        playNote({ freq: "C", octave: currentOctave + 1 });
+        // playMelodyNote({ freq: "C", octave: currentOctave + 1 });
+        let note: Note = { freq: "C", octave: currentOctave + 1 };
+        playMelodyNote(note);
+        keyNoteDict.set(";", note);
+      }
+    }
+
+    // ======== //
+    // CHORDS!! //
+    // ======== //
+    const chordOctave = middleOctave - 1;
+    let chordType: ChordType = "7";
+    if (isHeld("y")) {
+      chordType = "maj";
+    } else if (isHeld("h")) {
+      chordType = "min";
+    } else if (isHeld("v")) {
+      chordType = "maj7";
+    } else if (isHeld("c")) {
+      chordType = "6";
+    } else if (isHeld("x")) {
+      chordType = "9";
+    }
+
+    // SHARP
+    if (isHeld("q")) {
+      if (isFirstPress("t")) {
+        let note: Note = { freq: "Db", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("r")) {
+        let note: Note = { freq: "Eb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("e")) {
+        let note: Note = { freq: "F", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("w")) {
+        let note: Note = { freq: "Gb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("s")) {
+        let note: Note = { freq: "Ab", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("d")) {
+        let note: Note = { freq: "Bb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("f")) {
+        let note: Note = { freq: "C", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("g")) {
+        let note: Note = { freq: "Db", octave: chordOctave };
+        playChord(note, chordType);
+      }
+    } // FLAT
+    else if (isHeld("a")) {
+      if (isFirstPress("t")) {
+        // playMelodyNote({ freq: "B", octave: currentOctave - 1 });
+        let note: Note = { freq: "B", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("r")) {
+        // playMelodyNote({ freq: "Db", octave: currentOctave });
+        let note: Note = { freq: "Db", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("e")) {
+        // playMelodyNote({ freq: "Eb", octave: currentOctave });
+        let note: Note = { freq: "Eb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("w")) {
+        // playMelodyNote({ freq: "E", octave: currentOctave });
+        let note: Note = { freq: "E", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("s")) {
+        // playMelodyNote({ freq: "Gb", octave: currentOctave });
+        let note: Note = { freq: "Gb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("d")) {
+        // playMelodyNote({ freq: "Ab", octave: currentOctave });
+        let note: Note = { freq: "Ab", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("f")) {
+        // playMelodyNote({ freq: "Bb", octave: currentOctave });
+        let note: Note = { freq: "Bb", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("g")) {
+        // playMelodyNote({ freq: "B", octave: currentOctave });
+        let note: Note = { freq: "B", octave: chordOctave };
+        playChord(note, chordType);
+      }
+    } // NATURAL
+    else {
+      if (isFirstPress("t")) {
+        // playMelodyNote({ freq: "C", octave: currentOctave });
+        let note: Note = { freq: "C", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("r")) {
+        // playMelodyNote({ freq: "D", octave: currentOctave });
+        let note: Note = { freq: "D", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("e")) {
+        // playMelodyNote({ freq: "E", octave: currentOctave });
+        let note: Note = { freq: "E", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("w")) {
+        // playMelodyNote({ freq: "F", octave: currentOctave });
+        let note: Note = { freq: "F", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("s")) {
+        // playMelodyNote({ freq: "G", octave: currentOctave });
+        let note: Note = { freq: "G", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("d")) {
+        // playMelodyNote({ freq: "A", octave: currentOctave });
+        let note: Note = { freq: "A", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("f")) {
+        // playMelodyNote({ freq: "B", octave: currentOctave });
+        let note: Note = { freq: "B", octave: chordOctave };
+        playChord(note, chordType);
+      }
+      if (isFirstPress("g")) {
+        // playMelodyNote({ freq: "C", octave: currentOctave + 1 });
+        let note: Note = { freq: "C", octave: chordOctave };
+        playChord(note, chordType);
       }
     }
 
     prevKeys = new Set(keys);
   });
+
+  onMount(() => {
+    window.addEventListener("keydown", (event) => {
+      keys.add(event.key);
+      keys = keys;
+    });
+
+    window.addEventListener("keyup", (event) => {
+      keys.delete(event.key);
+      keys = keys;
+      stopMelodyNote(keyNoteDict.get(event.key));
+      keyNoteDict.delete(event.key);
+    });
+  });
 </script>
 
 <div class="flex w-full flex-row justify-center">
   <div class="flex h-screen flex-col justify-center">
-    <div class="flex flex-row flex-wrap gap-8 p-4 text-4xl">
-      {#each keys as key}
-        <span>{key}</span>
-      {/each}
-    </div>
+    <main class="my-4 flex flex-col gap-2 rounded-xl border-2 border-black">
+      <h1 class="text-5xl">Jazzboard</h1>
+      <div
+        class="mt-auto flex w-full flex-row flex-wrap gap-4 rounded-b-xl bg-slate-300 px-4 text-lg">
+        <span>keys down: </span>
+        {#each keys as key}
+          <span>{key}</span>
+        {/each}
+      </div>
+    </main>
   </div>
 </div>
