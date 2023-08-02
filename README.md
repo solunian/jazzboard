@@ -1,7 +1,7 @@
 # Jazzboard
 
 A way to play jazz lead sheets on a computer keyboard. Prototype web interface 
-made at the outernet by @hackclub!
+made at the outernet by [@hackclub](https://github.com/hackclub)!
 
 ## Disclaimer
 This isn't a legitimate instrument, and my music theory is very limited.
