@@ -35,7 +35,7 @@
 
   // CUTTING NOTES SHORT
   let keyNoteDict = new Map<string, Note>();
-  
+
   let keyChordDict = new Map<string, Chord>();
 
   // THE WATCHER!
@@ -362,6 +362,8 @@
       stopMelodyNote(keyNoteDict.get(event.key));
       keyNoteDict.delete(event.key);
     });
+
+    // new Audio("edited-sounds")
   });
 </script>
 

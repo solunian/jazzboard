@@ -30,7 +30,7 @@ allNotes = [...allNotes, { freq: "C", octave: 8 }];
 
 const initNote = (note: Note) => {
   return new Howl({
-    src: [`/edited-sounds/${note.freq}${note.octave}.wav`],
+    src: [`/edited-sounds-mp3/${note.freq}${note.octave}.mp3`],
   });
 };
 
@@ -70,7 +70,7 @@ export function stopMelodyNote(note: Note | undefined) {
 
 export function playNote(note: Note) {
   let audioNote = new Howl({
-    src: [`/edited-sounds/${note.freq}${note.octave}.wav`],
+    src: [`/edited-sounds-mp3/${note.freq}${note.octave}.mp3`],
   });
 
   audioNote.play();
